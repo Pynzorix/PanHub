@@ -1,14 +1,26 @@
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<div id="markdown-container">Loading...</div>
-<script>
-    const markdownContainer = document.getElementById('markdown-container');
-    const apiUrl = 'https://api.github.com/repos/pynzorix/panhub/contents/tos.md';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed GitHub Markdown</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div id="markdown-container">Loading...</div>
+    <script>
+        const markdownContainer = document.getElementById('markdown-container');
+        const rawUrl = 'https://raw.githubusercontent.com/Pynzorix/PanHub/refs/heads/main/tos.md';
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const markdown = atob(data.content);
-            markdownContainer.innerHTML = marked(markdown);
-        })
-        .catch(error => console.error('Error:', error));
-</script>
+        fetch(rawUrl)
+            .then(response => response.text())
+            .then(markdown => {
+                markdownContainer.innerHTML = marked(markdown);
+            })
+            .catch(error => {
+                console.error('Error fetching Markdown:', error);
+                markdownContainer.innerText = 'Failed to load content.';
+            });
+    </script>
+</body>
+</html>
