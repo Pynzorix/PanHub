@@ -62,44 +62,46 @@ end)
 
 -- incase of restorefunction (not possible yet but will be with Syn3)
 if hookmetamethod then
-  local oldNamecall
-  oldNamecall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
-      local method = getnamecallmethod()
-  
-      if(string.lower(method) == 'rconsoleprint') then
-          return task.wait(9e9)
-      end
-      
-      if(string.lower(method) == 'rconsoleinfo') then
-          return task.wait(9e9)
-      end
-  
-      if(string.lower(method) == 'rconsolewarn') then
-          return task.wait(9e9)
-      end
-  
-      if(string.lower(method) == 'rconsoleerr') then
-          return task.wait(9e9)
-      end
-  
-      if(string.lower(method) == 'print') then
-          return
-      end
-  
-      if(string.lower(method) == 'warn') then
-          return
-      end
-  
-      if(string.lower(method) == 'error') then
-          return
-      end
-  
-      if(string.lower(method) == 'rendernametag') then
-          return 
-      end
-  
-      return oldNamecall(self, ...)
-  end))
+  pcall(function()
+    local oldNamecall
+    oldNamecall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
+        local method = getnamecallmethod()
+    
+        if(string.lower(method) == 'rconsoleprint') then
+            return task.wait(9e9)
+        end
+        
+        if(string.lower(method) == 'rconsoleinfo') then
+            return task.wait(9e9)
+        end
+    
+        if(string.lower(method) == 'rconsolewarn') then
+            return task.wait(9e9)
+        end
+    
+        if(string.lower(method) == 'rconsoleerr') then
+            return task.wait(9e9)
+        end
+    
+        if(string.lower(method) == 'print') then
+            return
+        end
+    
+        if(string.lower(method) == 'warn') then
+            return
+        end
+    
+        if(string.lower(method) == 'error') then
+            return
+        end
+    
+        if(string.lower(method) == 'rendernametag') then
+            return 
+        end
+    
+        return oldNamecall(self, ...)
+    end))  
+  end)
 end
 
 task.spawn(function()
